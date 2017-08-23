@@ -1,12 +1,11 @@
 package School;
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-
 public class Student {
 
     private static int nextStudentId = 1;
-    private static List<Integer> idList = new ArrayList<>();
+    public static ArrayList<Integer> idList = new ArrayList<>();
+    public static ArrayList<Student> studentList = new ArrayList<>();
     private String name;
     private final int studentId;
     private int numberOfCredits;
@@ -20,6 +19,7 @@ public class Student {
         this.numberOfCredits = numberOfCredits;
         this.gpa = gpa;
         idList.add(studentId);
+        studentList.add(this);
     }
 
     public Student(String name, int studentId) {
@@ -71,6 +71,7 @@ public class Student {
         return ("\nID: " + studentId + "\nName: " + name + "\nNumber of Credits: " + numberOfCredits + "\nGPA: " + gpa);
     }
 
+
     public static void main(String[] args) {
         Student stephanie = new Student("Steph", 777, 8, 4.0);
 
@@ -88,13 +89,4 @@ public class Student {
         System.out.println(idList);
 
     }
-
-
-
 }
-
-
-
-//    public String printStudent(Student student){
-//        return ("\nID: " + student.studentId + "\nName: " + student.name + "\nNumber of Credits: " + student.numberOfCredits + "\nGPA: " + student.gpa);
-//    }
