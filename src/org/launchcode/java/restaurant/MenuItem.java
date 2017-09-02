@@ -3,9 +3,13 @@ package org.launchcode.java.restaurant;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class MenuItem {
+public class MenuItem extends AbstractEntity{
     enum Category {APPETIZER, MAIN_COURSE, DESSERT}
+
+//    private int id;
+//    static AtomicInteger nextId = new AtomicInteger();
 
 
     private Category category;
@@ -13,22 +17,21 @@ public class MenuItem {
     private String description;
     private LocalDateTime itemDate;
     private Boolean isNew;
-//    private Menu menuList;
-
-//    public ArrayList<MenuItem> menuList = new ArrayList<>();
-
 
 
 
     MenuItem(){
+        super();
         this.category = Category.APPETIZER;
         this.price = 0.00;
         this.description = "Generic Item Description";
         this.itemDate = LocalDateTime.now();
         setIsNew(itemDate);
+//        this.id = nextId.incrementAndGet();
     }
 
     MenuItem(Category category, Double price, String description, LocalDateTime itemDate){
+        this();
         this.category = category;
         this.price = price;
         this.description = description;
@@ -81,11 +84,17 @@ public class MenuItem {
         itemDate = anItemDate;
     }
 
-
+//    @Override
+//    public int getId() {
+//        return id;
+//    }
+//    public void setId(int newId){
+//        id = newId;
+//    }
 
     @Override
     public String toString(){
-        return ("\nCategory: " + category + "\nPrice: " + price + "\nDescription: " + description + "\nIs New: " + isNew + "\nItem Date: " + itemDate.getMonth() + " " + itemDate.getDayOfMonth() + ", " + itemDate.getYear() + " (" +  itemDate.getDayOfWeek() + ")\n");
+        return ("\nID: " + id + "\nCategory: " + category + "\nPrice: " + price + "\nDescription: " + description + "\nIs New: " + isNew + "\nItem Date: " + itemDate.getMonth() + " " + itemDate.getDayOfMonth() + ", " + itemDate.getYear() + " (" +  itemDate.getDayOfWeek() + ")\n");
     }
 
 
@@ -105,21 +114,18 @@ public class MenuItem {
         }
 
         MenuItem theItem = (MenuItem) o;
-        return theItem.getDescription() == getDescription() && theItem.getCategory() == getCategory();
+        return theItem.getId() == getId();
+//        return theItem.getDescription() == getDescription() && theItem.getCategory() == getCategory();
     }
 
     @Override
     public int hashCode() {
-        int result = category.hashCode();
+        int result = id;
+        result = 31 * result + category.hashCode();
         result = 31 * result + price.hashCode();
         result = 31 * result + description.hashCode();
-        result = 31 * result + isNew.hashCode();
         result = 31 * result + itemDate.hashCode();
+        result = 31 * result + isNew.hashCode();
         return result;
     }
-
-
-
-
-
 }

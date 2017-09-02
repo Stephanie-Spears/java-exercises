@@ -3,12 +3,17 @@ package org.launchcode.java.restaurant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Menu {
+public class Menu extends AbstractEntity{
+//    private int id;
+//    private int newId = 0;
     private LocalDateTime menuDate;
     private ArrayList<MenuItem> menuList = new ArrayList<>();
 
+
     Menu(){
+        super();
         this.menuDate = LocalDateTime.now();
+//        this.id = newId;
     }
     Menu(MenuItem... items){
         this();
@@ -32,6 +37,17 @@ public class Menu {
         menuList.remove(anItem);
     }
 
+//    @Override
+//    public int getId() {
+//        return id;
+//    }
+
+//
+//    public void setId(int anId){
+//        id = anId;
+//        anId++;
+//
+//    }
 
     @Override
     public String toString(){
