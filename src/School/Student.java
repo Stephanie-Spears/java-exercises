@@ -1,13 +1,16 @@
 package School;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Student {
+    public static List<Integer> studentList = new ArrayList<>();
+
 
     private static int nextStudentId = 1;
-    public static ArrayList<Integer> idList = new ArrayList<>();
-    public static ArrayList<Student> studentList = new ArrayList<>();
     private String name;
-    private final int studentId;
+    private Integer studentId;
+//    private final int studentId;
     private int numberOfCredits;
     private double gpa;
 
@@ -18,8 +21,6 @@ public class Student {
         this.studentId = studentId;
         this.numberOfCredits = numberOfCredits;
         this.gpa = gpa;
-        idList.add(studentId);
-        studentList.add(this);
     }
 
     public Student(String name, int studentId) {
@@ -31,13 +32,26 @@ public class Student {
         nextStudentId++;
     }
 
-    public Student(String name, int numberOfCredits, double gpa){
-        this(name, nextStudentId, numberOfCredits, gpa);
-        nextStudentId++;
+    public void addGrade(int courseCredits, double grade){
+        this.numberOfCredits += courseCredits;
+        this.gpa += (grade * courseCredits);
     }
-
-    /* id duplicate verification --current build allows duplicate IDs */
-
+    public String getGradeLevel(){
+        String status = "";
+        if(this.numberOfCredits <= 29){
+            status = "Freshman";
+        }
+        if(this.numberOfCredits >= 30 && this.numberOfCredits <= 59){
+            status = "Sophomore";
+        }
+        if(this.numberOfCredits >= 60 && this.numberOfCredits <= 89){
+            status = "Junior";
+        }
+        if(this.numberOfCredits >= 90){
+            status = "Senior";
+        }
+        return status;
+    }
 
     /* getters and setters */
     public String getName() {
@@ -64,6 +78,9 @@ public class Student {
     public Integer getStudentId() {
         return studentId;
     }
+    public void setStudentId(Integer aStudentId) {
+        studentId = aStudentId;
+    }
 
 
     @Override
@@ -72,21 +89,35 @@ public class Student {
     }
 
 
-    public static void main(String[] args) {
-        Student stephanie = new Student("Steph", 777, 8, 4.0);
+    @Override //do I need this?
+    public boolean equals(Object o) {
 
-        Student max = new Student("Max");
-        Student uriae = new Student("Uri");
+        if (o == this) {
+            return true;
+        }
 
-        Student sheena = new Student("Sheena", 4, 3.8);
-        Student alex = new Student("Alex", 8, 2.1);
+        if (o == null) {
+            return false;
+        }
 
-        System.out.println(stephanie);
-        System.out.println(max);
-        System.out.println(uriae);
-        System.out.println(sheena);
-        System.out.println(alex);
-        System.out.println(idList);
+        if (o.getClass() != getClass()) {
+            return false;
+        }
 
+        Student theStudent = (Student) o;
+        return theStudent.getStudentId() == getStudentId();
     }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name.hashCode();
+        result = 31 * result + studentId;
+        result = 31 * result + numberOfCredits;
+        temp = Double.doubleToLongBits(gpa);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
 }
